@@ -1,0 +1,18 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: hello-script
+spec:
+  volumes:
+  - name: scripts
+    configMap:
+      name: hello-script
+      defaultMode: 0755
+  steps:
+  - name: hello
+    image: ubuntu
+    volumeMounts:
+    - name: scripts
+      mountPath: /mnt/scripts
+    command:
+    - /mnt/scripts/hello.sh
