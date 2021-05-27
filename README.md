@@ -7,3 +7,9 @@ Experimentation with:
 - helm
 - argocd
 - tekton
+
+## Gettings started
+
+```bash
+terraform init
+```
