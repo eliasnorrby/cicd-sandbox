@@ -1,6 +1,7 @@
 # cicd-sandbox
 
 Experimentation with:
+
 - kind
 - terraform
 - kustomize
@@ -8,7 +9,13 @@ Experimentation with:
 - argocd
 - tekton
 
-## Gettings started
+## Use cases
+
+### Semi-persistent local dev environment
+
+### e2e testing environment
+
+## Getting started
 
 ```bash
 cd terraform
@@ -20,6 +27,7 @@ cd ../tekton
 
 ## Useful commands
 
-```
+```bash
 kubectl config set-context --current --namespace=tekton-pipelines
 ```
+
