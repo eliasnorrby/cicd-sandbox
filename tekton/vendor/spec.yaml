@@ -1,0 +1,5 @@
+baseURL: https://raw.githubusercontent.com/tektoncd/catalog/main/task
+tasks:
+  - git-clone@0.3
+  - git-cli@0.1
+
