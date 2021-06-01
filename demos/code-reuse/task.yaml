@@ -1,0 +1,25 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: task-with-code-reuse
+spec:
+  volumes:
+  - name: ci-scripts
+    configMap:
+      name: ci-scripts
+      defaultMode: 0755
+  steps:
+  - name: first-step
+    image: ubuntu
+    volumeMounts:
+    - name: ci-scripts
+      mountPath: /usr/local/bin
+    command:
+    - build-step.sh
+  - name: second-step
+    image: ubuntu
+    volumeMounts:
+    - name: ci-scripts
+      mountPath: /usr/local/bin
+    command:
+    - another-build-step.sh

@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+configMapGenerator:
+- files:
+  - ./scripts/library.sh
+  - ./scripts/build-step.sh
+  - ./scripts/another-build-step.sh
+  name: ci-scripts
+generatorOptions:
+  disableNameSuffixHash: true
+
