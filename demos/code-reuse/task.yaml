@@ -8,18 +8,16 @@ spec:
     configMap:
       name: ci-scripts
       defaultMode: 0755
-  steps:
-  - name: first-step
-    image: ubuntu
+  stepTemplate:
     volumeMounts:
     - name: ci-scripts
       mountPath: /usr/local/bin
+  steps:
+  - name: first-step
+    image: ubuntu
     command:
     - build-step.sh
   - name: second-step
     image: ubuntu
-    volumeMounts:
-    - name: ci-scripts
-      mountPath: /usr/local/bin
     command:
     - another-build-step.sh
