@@ -1,0 +1,27 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: clone-hello
+spec:
+  params:
+    - name: url
+    - name: revision
+      default: master
+  workspaces:
+    - name: source
+  tasks:
+    - name: clone-clustertask
+      taskRef:
+        name: git-clone
+        kind: ClusterTask
+      params:
+        - name: url
+          value: $(params.url)
+        - name: revision
+          value: $(params.revision)
+      workspaces:
+        - name: output
+          workspace: source
+    - name: hello
+      taskRef:
+        name: hello
