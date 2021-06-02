@@ -2,6 +2,8 @@
 
 # Given a list of task names (name@version), download the respective file to the
 # 'vendor' directory and update the 'kind' to ClusterTask.
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1 && pwd )"
+cd "$DIR" || exit 1
 
 # Could use a constant for this...
 BASE_URL=$(yq eval '.baseURL' ./spec.yaml)
