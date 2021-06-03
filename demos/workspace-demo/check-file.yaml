@@ -1,0 +1,42 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: check-file
+spec:
+  params:
+    - name: path
+      description: Path to the file to check.
+  results:
+    - name: exists
+      description: Either 'yes' or 'no'.
+  workspaces:
+    - name: source
+      description: Project source.
+  steps:
+    - name: check-file-exists
+      image: ubuntu
+      env:
+        - name: DIR
+          value: $(workspaces.source.path)
+        - name: FILE_TO_TEST
+          value: $(params.path)
+        - name: RESULTS_FILE
+          value: $(results.exists.path)
+      script: |
+        #!/bin/sh
+
+        cd "$DIR" || exit 1
+
+        if [ -f "$FILE_TO_TEST" ]; then
+          EXISTS=yes
+        else
+          EXISTS=no
+        fi
+
+        echo "$FILE_TO_TEST exists: $EXISTS"
+
+        echo "pwd: $(pwd)"
+        echo "contents: "
+        ls -la
+
+        echo -n "$EXISTS" > "$RESULTS_FILE"

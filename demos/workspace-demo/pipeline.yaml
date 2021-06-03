@@ -1,0 +1,47 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: pick-a-build-task
+spec:
+  params:
+    - name: url
+    - name: revision
+      default: master
+  workspaces:
+    - name: source
+  tasks:
+    - name: git-clone
+      taskRef:
+        name: git-clone
+        kind: ClusterTask
+      params:
+        - name: url
+          value: $(params.url)
+        - name: revision
+          value: $(params.revision)
+      workspaces:
+        - name: output
+          workspace: source
+    - name: check-for-readme
+      taskRef:
+        name: check-file
+      runAfter:
+        - git-clone
+      params:
+        - name: path
+          value: README.md
+      workspaces:
+        - name: source
+          workspace: source
+    - name: check-for-pom
+      taskRef:
+        name: check-file
+      runAfter:
+        - git-clone
+      params:
+        - name: path
+          value: pom.xml
+      workspaces:
+        - name: source
+          workspace: source
+

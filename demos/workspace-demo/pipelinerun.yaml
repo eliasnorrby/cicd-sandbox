@@ -1,0 +1,24 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  creationTimestamp: null
+  generateName: pick-a-build-task-run-
+  namespace: default
+spec:
+  params:
+    - name: revision
+      value: master
+    - name: url
+      value: https://github.com/kelseyhightower/nocode.git
+  pipelineRef:
+    name: pick-a-build-task
+  workspaces:
+    - name: source
+      volumeClaimTemplate:
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 1Gi
+status: {}
